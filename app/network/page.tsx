@@ -5,8 +5,22 @@ import { GlobalMap, InteractiveGrid } from '@/components/shared/visuals'
 import { NetworkPulse } from '@/components/shared/pulse'
 import { Globe, Users, Zap, Shield, Laptop, Share2, MessageSquare, ArrowUpRight } from 'lucide-react'
 import { Comments } from '@/components/shared/comments'
+import { useRouter } from 'next/navigation'
+import { createClient } from '@/utils/supabase-browser'
 
 export default function NetworkPage() {
+  const router = useRouter()
+  const supabase = createClient()
+
+  const handleAccessProtocol = async (route: string) => {
+    const { data: { session } } = await supabase.auth.getSession()
+    if (session) {
+      router.push(route)
+    } else {
+      router.push('/login')
+    }
+  }
+
   return (
     <div className="bg-white min-h-screen relative overflow-hidden">
       <InteractiveGrid />
@@ -43,10 +57,10 @@ export default function NetworkPage() {
       <section className="section-padding pb-40">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:p-12">
            {[
-             { title: 'Member Chat', icon: MessageSquare, desc: 'Live messaging and discussion groups for all alumni members.' },
-             { title: 'Library', icon: Share2, desc: 'Download documents, guides, and career resources from our network.' },
-             { title: 'Online Groups', icon: Laptop, desc: 'Join digital meetups and interest-based alumni circles.' },
-             { title: 'Profile Security', icon: Shield, desc: 'Your data is protected with the highest level of encryption.' },
+             { title: 'Member Chat', icon: MessageSquare, desc: 'Live messaging and discussion groups for all alumni members.', route: '/dashboard' },
+             { title: 'Library', icon: Share2, desc: 'Download documents, guides, and career resources from our network.', route: '/resources' },
+             { title: 'Online Groups', icon: Laptop, desc: 'Join digital meetups and interest-based alumni circles.', route: '/dashboard' },
+             { title: 'Profile Security', icon: Shield, desc: 'Your data is protected with the highest level of encryption.', route: '/dashboard' },
            ].map((tool, i) => (
              <FadeIn key={i} delay={i * 0.1}>
                  <div className="p-6 md:p-10 border border-border rounded-[40px] hover:border-black transition-all group relative overflow-hidden h-full">
@@ -59,7 +73,10 @@ export default function NetworkPage() {
                     <h4 className="text-2xl font-bold tracking-tighter mb-4">{tool.title}</h4>
                     <p className="text-muted font-medium text-base mb-8">{tool.desc}</p>
                     <Magnetic>
-                       <button className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-primary hover:text-black transition-colors">
+                       <button 
+                         onClick={() => handleAccessProtocol(tool.route)}
+                         className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-primary hover:text-black transition-colors"
+                       >
                           Access Protocol <ArrowUpRight className="w-4 h-4" />
                        </button>
                     </Magnetic>
