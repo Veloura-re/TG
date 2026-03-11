@@ -1,9 +1,10 @@
 'use client'
 
-import { FadeIn, AnimatedSection, TextReveal, Magnetic } from '@/components/shared/animations'
+import { FadeIn, AnimatedSection, TextReveal, Magnetic, ScrollFadeIn, StaggerContainer, StaggerItem, GlowLine } from '@/components/shared/animations'
 import { GlobalMap, InteractiveGrid } from '@/components/shared/visuals'
 import { NetworkPulse } from '@/components/shared/pulse'
 import { Globe, Users, Zap, Shield, Laptop, Share2, MessageSquare, ArrowUpRight } from 'lucide-react'
+import { Comments } from '@/components/shared/comments'
 
 export default function NetworkPage() {
   return (
@@ -16,7 +17,7 @@ export default function NetworkPage() {
           <FadeIn>
             <span className="text-primary font-bold text-xs uppercase tracking-[0.4em] mb-8 block font-mono">Global Network</span>
           </FadeIn>
-          <h1 className="text-7xl md:text-[160px] font-bold tracking-tighter mb-12 leading-[0.8] text-black">
+          <h1 className="text-4xl md:text-[160px] font-bold tracking-tighter mb-12 leading-[0.8] text-black">
             <TextReveal text="STAY" className="mb-4" />
             <span className="italic-bold text-primary"><TextReveal text="CONNECTED." /></span>
           </h1>
@@ -40,7 +41,7 @@ export default function NetworkPage() {
 
       {/* Network Tools */}
       <section className="section-padding pb-40">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:p-12">
            {[
              { title: 'Member Chat', icon: MessageSquare, desc: 'Live messaging and discussion groups for all alumni members.' },
              { title: 'Library', icon: Share2, desc: 'Download documents, guides, and career resources from our network.' },
@@ -48,7 +49,7 @@ export default function NetworkPage() {
              { title: 'Profile Security', icon: Shield, desc: 'Your data is protected with the highest level of encryption.' },
            ].map((tool, i) => (
              <FadeIn key={i} delay={i * 0.1}>
-                 <div className="p-10 border border-border rounded-[40px] hover:border-black transition-all group relative overflow-hidden h-full">
+                 <div className="p-6 md:p-10 border border-border rounded-[40px] hover:border-black transition-all group relative overflow-hidden h-full">
                     <div className="absolute top-0 right-0 p-6 opacity-[0.03] group-hover:scale-150 transition-all duration-1000">
                        <tool.icon className="w-40 h-40 text-black" />
                     </div>
@@ -85,6 +86,14 @@ export default function NetworkPage() {
                </Magnetic>
             </div>
          </div>
+      </section>
+
+      {/* Comments */}
+      <section className="section-padding py-20 bg-white">
+        <GlowLine className="mb-16" />
+        <ScrollFadeIn>
+          <Comments targetType="programs" targetId="network-hub" />
+        </ScrollFadeIn>
       </section>
     </div>
   )

@@ -28,11 +28,11 @@ export default function SummitDetailPage() {
 
         <div className="max-w-4xl mb-32">
           <span className="text-primary font-bold text-xs uppercase tracking-[0.4em] mb-4 block">Major Event</span>
-          <h1 className="text-6xl md:text-9xl font-bold tracking-tighter mb-8 italic text-black uppercase leading-[0.9]">
+          <h1 className="text-4xl md:text-9xl font-bold tracking-tighter mb-8 italic text-black uppercase leading-[0.9]">
             ANNUAL SUMMIT <br /><span className="text-primary not-italic">2026.</span>
           </h1>
           
-          <div className="flex flex-wrap gap-10 py-10 border-y-2 border-zinc-100 my-12">
+          <div className="flex flex-wrap gap-6 md:p-10 py-10 border-y-2 border-zinc-100 my-12">
              <div className="flex items-center gap-3">
                 <Calendar className="w-6 h-6 text-primary" />
                 <div>
@@ -61,7 +61,7 @@ export default function SummitDetailPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-20 mb-40">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:p-20 mb-40">
            <div className="lg:col-span-7 space-y-20">
               <div className="space-y-10">
                  <h2 className="text-4xl font-bold uppercase italic">The <span className="text-primary not-italic">Agenda.</span></h2>
@@ -82,7 +82,7 @@ export default function SummitDetailPage() {
            </div>
 
            <div className="lg:col-span-5">
-              <div className="bg-zinc-50 rounded-[40px] p-12 sticky top-32 space-y-12 border-2 border-zinc-100">
+              <div className="bg-zinc-50 rounded-[40px] p-6 md:p-12 sticky top-8 md:p-32 space-y-12 border-2 border-zinc-100">
                  <div>
                     <h3 className="text-2xl font-bold mb-6 flex items-center gap-3 uppercase"><Info className="w-6 h-6 text-primary" /> Registration Info</h3>
                     <p className="text-muted font-medium mb-8">Early bird tickets are available until May 1st. Includes access to all workshops, formal dinner, and networking sessions.</p>

@@ -61,8 +61,13 @@ export function Navbar() {
           ))}
           
           <Magnetic>
+            <Link href="/signup" className="border-2 border-zinc-200 text-black px-6 py-3 rounded-full text-xs font-bold uppercase tracking-[0.2em] hover:border-primary hover:text-primary transition-all active:scale-95">
+              Sign Up
+            </Link>
+          </Magnetic>
+          <Magnetic>
             <Link href="/login" className="bg-primary text-white px-8 py-3 rounded-full text-xs font-bold uppercase tracking-[0.2em] hover:bg-black transition-all shadow-[0_10px_30px_rgba(255,0,51,0.3)] active:scale-95">
-              Alumni Portal
+              Login
             </Link>
           </Magnetic>
         </div>
@@ -92,8 +97,11 @@ export function Navbar() {
                 {item.label}
               </Link>
             ))}
+            <Link href="/signup" onClick={() => setIsOpen(false)} className="w-full bg-primary text-white py-6 rounded-3xl text-2xl font-bold uppercase tracking-widest text-center">
+              Sign Up
+            </Link>
             <Link href="/login" onClick={() => setIsOpen(false)} className="w-full bg-black text-white py-6 rounded-3xl text-2xl font-bold uppercase tracking-widest text-center">
-              Alumni Portal
+              Login
             </Link>
           </motion.div>
         )}

@@ -23,7 +23,7 @@ export default function NewsPage() {
               <span className="text-primary font-bold text-xs uppercase tracking-[0.4em] mb-8 block flex items-center gap-4">
                  <Radio className="w-4 h-4 animate-pulse" /> Live Intelligence Feed
               </span>
-              <h1 className="text-7xl md:text-[140px] font-bold tracking-tighter mb-8 leading-[0.85] text-black">
+              <h1 className="text-4xl md:text-[140px] font-bold tracking-tighter mb-8 leading-[0.85] text-black">
                 <TextReveal text="GLOBAL" className="mb-2" />
                 <span className="text-primary italic"><TextReveal text="INTELLIGENCE." /></span>
               </h1>
@@ -55,7 +55,7 @@ export default function NewsPage() {
         </FadeIn>
 
         {/* Intelligence Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:p-12">
           {NEWS_ITEMS.map((item, i) => (
             <FadeIn key={item.id} delay={0.1 * (i % 3)} className="group">
               <Link href={`/news/${item.slug}`}>

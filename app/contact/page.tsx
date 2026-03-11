@@ -11,7 +11,7 @@ export default function ContactPage() {
           <FadeIn>
             <span className="text-primary font-bold text-xs uppercase tracking-[0.4em] mb-8 block font-mono">Operations // Headquarters</span>
           </FadeIn>
-          <h1 className="text-7xl md:text-[140px] font-bold tracking-tighter mb-8 leading-[0.85] text-black">
+          <h1 className="text-4xl md:text-[140px] font-bold tracking-tighter mb-8 leading-[0.85] text-black">
             <TextReveal text="ESTABLISH" className="mb-2" />
             <span className="text-primary italic"><TextReveal text="CONTACT." /></span>
           </h1>
@@ -20,7 +20,7 @@ export default function ContactPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:p-24 items-start">
           {/* Contact Methods */}
           <div className="space-y-16">
             <FadeIn delay={0.1}>
@@ -31,7 +31,7 @@ export default function ContactPage() {
                   { label: 'Station', value: 'Kizilay Blvd, No: 123, Ankara', icon: MapPin, type: 'Core HQ' },
                   { label: 'Global Node', value: 'London / Istanbul / NY', icon: Globe, type: 'Nodes' },
                 ].map((item, i) => (
-                  <div key={i} className="p-10 border border-border rounded-[40px] hover:border-primary transition-all group overflow-hidden relative shadow-sm hover:shadow-2xl duration-700">
+                  <div key={i} className="p-6 md:p-10 border border-border rounded-[40px] hover:border-primary transition-all group overflow-hidden relative shadow-sm hover:shadow-2xl duration-700">
                     <div className="absolute top-0 right-0 p-6 opacity-0 group-hover:opacity-[0.05] group-hover:scale-150 transition-all duration-1000">
                       <item.icon className="w-40 h-40" />
                     </div>
@@ -47,7 +47,7 @@ export default function ContactPage() {
               </div>
             </FadeIn>
 
-            <FadeIn delay={0.2} className="p-10 bg-black text-white rounded-[40px] flex items-center justify-between group overflow-hidden relative">
+            <FadeIn delay={0.2} className="p-6 md:p-10 bg-black text-white rounded-[40px] flex items-center justify-between group overflow-hidden relative">
                <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 pointer-events-none" />
                <div className="relative z-10">
                   <h4 className="text-xs font-bold uppercase tracking-[0.4em] mb-4 text-primary">Social Nodes</h4>
@@ -68,7 +68,7 @@ export default function ContactPage() {
           </div>
 
           {/* Futuristic Form */}
-          <FadeIn delay={0.3} className="bg-zinc-50 border border-border p-12 md:p-16 rounded-[60px] relative shadow-2xl">
+          <FadeIn delay={0.3} className="bg-zinc-50 border border-border p-6 md:p-12 md:p-6 md:p-16 rounded-[60px] relative shadow-2xl">
             <div className="mb-12">
                <h3 className="text-4xl font-bold tracking-tighter mb-4">Transmission Interface</h3>
                <p className="text-muted font-medium">Send an encrypted message to the core mission control.</p>

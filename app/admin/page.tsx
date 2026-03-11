@@ -30,7 +30,7 @@ export default function AdminDashboardPage() {
             <div className="flex items-center gap-3 text-primary font-bold text-xs uppercase tracking-[0.4em] mb-4">
                <Shield className="w-4 h-4 animate-pulse" /> Secure Operations Dashboard
             </div>
-            <h1 className="text-5xl md:text-6xl font-bold tracking-tighter italic">COMMAND<br/><span className="text-primary not-italic">CENTER.</span></h1>
+            <h1 className="text-5xl md:text-4xl md:text-6xl font-bold tracking-tighter italic">COMMAND<br/><span className="text-primary not-italic">CENTER.</span></h1>
          </div>
          <div className="flex gap-4">
             <Magnetic>
@@ -45,7 +45,7 @@ export default function AdminDashboardPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {stats.map((stat, i) => (
           <FadeIn key={stat.name} delay={i * 0.1}>
-            <div className="bg-zinc-50 border border-border p-10 rounded-[40px] hover:border-primary hover:shadow-2xl transition-all duration-700 group cursor-default shadow-sm">
+            <div className="bg-zinc-50 border border-border p-6 md:p-10 rounded-[40px] hover:border-primary hover:shadow-2xl transition-all duration-700 group cursor-default shadow-sm">
               <div className="flex items-start justify-between mb-8">
                 <div className="w-14 h-14 bg-white border border-border rounded-2xl flex items-center justify-center group-hover:bg-black group-hover:text-white transition-all duration-700 shadow-sm">
                   <stat.icon className="w-7 h-7" />
@@ -61,7 +61,7 @@ export default function AdminDashboardPage() {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 pt-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:p-12 pt-8">
         {/* Recent Activity Feed */}
         <div className="lg:col-span-2 space-y-8">
           <div className="flex items-center justify-between border-b border-border pb-6">
@@ -101,7 +101,7 @@ export default function AdminDashboardPage() {
         {/* Quick Insights */}
         <div className="space-y-8">
            <h2 className="text-2xl font-bold tracking-tight italic uppercase tracking-[0.1em]">Network <span className="text-primary not-italic">Health</span></h2>
-           <div className="p-10 bg-black text-white rounded-[40px] relative overflow-hidden group shadow-2xl">
+           <div className="p-6 md:p-10 bg-black text-white rounded-[40px] relative overflow-hidden group shadow-2xl">
               <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 pointer-events-none" />
               <div className="relative z-10 space-y-10">
                  <div className="flex items-center justify-between">

@@ -1,9 +1,11 @@
 'use client'
 
 import React, { useState } from 'react'
-import { FadeIn, AnimatedSection, TextReveal, Magnetic } from '@/components/shared/animations'
+import { FadeIn, AnimatedSection, TextReveal, Magnetic, ScrollFadeIn, StaggerContainer, StaggerItem, GlowLine } from '@/components/shared/animations'
 import { GraduationCap, Award, Globe, Zap, ArrowRight, Shield, Cpu, ChevronDown, CheckCircle2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { Comments } from '@/components/shared/comments'
+import Link from 'next/link'
 
 const PROGRAMS = [
   { 
@@ -60,7 +62,7 @@ export default function ProgramsPage() {
           <FadeIn>
             <span className="text-primary font-bold text-xs uppercase tracking-[0.4em] mb-8 block font-mono">Available Programs</span>
           </FadeIn>
-          <h1 className="text-7xl md:text-[140px] font-bold tracking-tighter mb-8 leading-[0.85] text-black">
+          <h1 className="text-4xl md:text-[140px] font-bold tracking-tighter mb-8 leading-[0.85] text-black">
             <TextReveal text="CAREER" className="mb-2" />
             <span className="text-primary italic"><TextReveal text="PATHWAYS." /></span>
           </h1>
@@ -69,9 +71,10 @@ export default function ProgramsPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-          {PROGRAMS.map((prog, i) => (
-            <FadeIn key={prog.id} delay={i * 0.1}>
+        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:p-10">
+          {PROGRAMS.map((prog) => (
+            <StaggerItem key={prog.id}>
+              <Link href={`/programs/${prog.id}`}>
               <div className="group bg-white border border-border rounded-[60px] overflow-hidden hover:border-primary hover:shadow-2xl transition-all duration-700 flex flex-col h-full shadow-sm">
                 <div className="aspect-[16/11] bg-zinc-100 relative overflow-hidden">
                   <div className="absolute inset-0 bg-black/20 group-hover:bg-primary/10 transition-colors duration-700" />
@@ -87,7 +90,7 @@ export default function ProgramsPage() {
                   </div>
                 </div>
 
-                <div className="p-12 flex-1 flex flex-col space-y-10">
+                <div className="p-6 md:p-12 flex-1 flex flex-col space-y-10">
                   <div className="space-y-6">
                     <h3 className="text-4xl font-bold tracking-tighter leading-none group-hover:text-primary transition-colors">{prog.name}</h3>
                     <p className="text-muted leading-relaxed font-medium text-lg">{prog.description}</p>
@@ -124,9 +127,18 @@ export default function ProgramsPage() {
                   </div>
                 </div>
               </div>
-            </FadeIn>
+              </Link>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
+      </section>
+
+      {/* Comments */}
+      <section className="section-padding py-20">
+        <GlowLine className="mb-16" />
+        <ScrollFadeIn>
+          <Comments targetType="programs" targetId="programs-page" />
+        </ScrollFadeIn>
       </section>
     </div>
   )

@@ -25,7 +25,7 @@ export default function AdminProgramsPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
          {PROGRAMS_LIST.map((prog) => (
             <FadeIn key={prog.id}>
-               <div className="bg-white border border-border p-10 rounded-[48px] hover:shadow-xl transition-all group">
+               <div className="bg-white border border-border p-6 md:p-10 rounded-[48px] hover:shadow-xl transition-all group">
                   <div className="flex items-start justify-between mb-8">
                      <div className="w-16 h-16 bg-zinc-50 rounded-2xl flex items-center justify-center border border-border group-hover:bg-black group-hover:text-white transition-colors">
                         <GraduationCap className="w-8 h-8" />

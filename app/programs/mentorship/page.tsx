@@ -15,7 +15,7 @@ export default function MentorshipPage() {
       <div className="section-padding relative z-10">
         <div className="max-w-4xl mb-32">
           <span className="text-primary font-bold text-xs uppercase tracking-[0.4em] mb-4 block">Mentorship Program</span>
-          <h1 className="text-6xl md:text-9xl font-bold tracking-tighter mb-8 italic text-black uppercase">
+          <h1 className="text-4xl md:text-9xl font-bold tracking-tighter mb-8 italic text-black uppercase">
             GROW <span className="text-primary not-italic">TOGETHER.</span>
           </h1>
           <p className="text-xl md:text-2xl text-muted leading-relaxed font-medium">
@@ -23,7 +23,7 @@ export default function MentorshipPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center mb-40">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:p-20 items-center mb-40">
            <div className="space-y-12">
               <div className="space-y-6">
                  <h2 className="text-4xl font-bold uppercase tracking-tight">How it <span className="text-primary italic">Works.</span></h2>
@@ -51,7 +51,7 @@ export default function MentorshipPage() {
               </div>
            </div>
            
-           <FadeIn delay={0.3} className="bg-zinc-50 rounded-[60px] p-12 md:p-20 border-2 border-transparent hover:border-zinc-200 transition-all">
+           <FadeIn delay={0.3} className="bg-zinc-50 rounded-[60px] p-6 md:p-12 md:p-6 md:p-20 border-2 border-transparent hover:border-zinc-200 transition-all">
               <h3 className="text-3xl font-bold mb-8 uppercase">Become a <span className="text-primary italic">Mentor.</span></h3>
               <p className="text-muted font-medium mb-12">Share your experience and help the next generation of graduates succeed in their professional journey.</p>
               <ul className="space-y-4 mb-12">
@@ -71,7 +71,7 @@ export default function MentorshipPage() {
         </div>
 
         {/* CTA */}
-        <div className="bg-primary rounded-[60px] p-20 text-center text-white relative overflow-hidden group">
+        <div className="bg-primary rounded-[60px] p-6 md:p-20 text-center text-white relative overflow-hidden group">
            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1),transparent_50%)]" />
            <div className="relative z-10">
               <h2 className="text-4xl md:text-6xl font-bold mb-8 uppercase italic tracking-tighter">Ready to <span className="not-italic">Connect?</span></h2>

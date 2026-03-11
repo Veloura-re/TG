@@ -88,7 +88,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 p-12 bg-white relative overflow-hidden">
+      <main className="flex-1 p-6 md:p-12 bg-white relative overflow-hidden">
         {/* Futuristic Background Blur */}
         <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-primary/2 rounded-full blur-[100px] z-0 pointer-events-none" />
         <div className="relative z-10">

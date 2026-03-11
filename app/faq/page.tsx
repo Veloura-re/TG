@@ -39,7 +39,7 @@ export default function FAQPage() {
           <FadeIn>
             <span className="text-primary font-bold text-xs uppercase tracking-[0.4em] mb-8 block font-mono">Operations // Intelligence FAQ</span>
           </FadeIn>
-          <h1 className="text-7xl md:text-[140px] font-bold tracking-tighter mb-8 leading-[0.85] text-black italic">
+          <h1 className="text-4xl md:text-[140px] font-bold tracking-tighter mb-8 leading-[0.85] text-black italic">
             <TextReveal text="FREQUENT" className="mb-2" />
             <span className="text-primary"><TextReveal text="QUERIES." /></span>
           </h1>

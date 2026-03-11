@@ -2,6 +2,7 @@
 
 import { FadeIn, AnimatedSection, TextReveal, Magnetic } from '@/components/shared/animations'
 import { Files, Download, ArrowRight, Shield, Zap, Search, Globe, FileText } from 'lucide-react'
+import Link from 'next/link'
 
 const RESOURCES = [
   { id: 1, title: 'Network Protocol Handbook 2026', type: 'PDF', size: '2.4 MB', node: 'Node 01' },
@@ -19,7 +20,7 @@ export default function ResourcesPage() {
           <FadeIn>
             <span className="text-primary font-bold text-xs uppercase tracking-[0.4em] mb-8 block font-mono">Operations // Assets</span>
           </FadeIn>
-          <h1 className="text-7xl md:text-[140px] font-bold tracking-tighter mb-8 leading-[0.85] text-black italic-bold">
+          <h1 className="text-4xl md:text-[140px] font-bold tracking-tighter mb-8 leading-[0.85] text-black italic-bold">
             <TextReveal text="ASSET" className="mb-2" />
             <span className="text-primary"><TextReveal text="CENTER." /></span>
           </h1>
@@ -31,9 +32,10 @@ export default function ResourcesPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {RESOURCES.map((res, i) => (
             <FadeIn key={res.id} delay={i * 0.1}>
-              <div className="group p-10 bg-white border border-border rounded-[40px] hover:border-primary hover:shadow-[0_40px_100px_-20px_rgba(0,0,0,0.05)] transition-all duration-700 flex items-center justify-between gap-8 relative overflow-hidden">
+              <Link href={`/resources/${res.id}`}>
+              <div className="group p-6 md:p-10 bg-white border border-border rounded-[40px] hover:border-primary hover:shadow-[0_40px_100px_-20px_rgba(0,0,0,0.05)] transition-all duration-700 flex items-center justify-between gap-8 relative overflow-hidden">
                 <div className="absolute top-0 right-0 p-8 opacity-0 group-hover:opacity-[0.03] group-hover:scale-150 group-hover:-rotate-12 transition-all duration-1000">
-                  <Files className="w-60 h-60" />
+                  <Files className="w-32 h-32 md:w-60 md:h-60" />
                 </div>
                 
                 <div className="flex items-center gap-8 relative z-10">
@@ -59,6 +61,7 @@ export default function ResourcesPage() {
                   </Magnetic>
                 </div>
               </div>
+              </Link>
             </FadeIn>
           ))}
         </div>

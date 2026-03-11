@@ -10,10 +10,10 @@ export function Footer() {
       <div className="absolute top-0 left-0 w-full h-[1px] bg-zinc-100" />
       
       {/* Red Accent Glow */}
-      <div className="absolute -bottom-40 -left-40 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute -bottom-40 -left-40 w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-[1400px] mx-auto px-6 md:px-16">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-20 mb-32 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:p-20 mb-32 relative z-10">
           <div className="md:col-span-5 space-y-12">
             <Link href="/" className="flex items-center gap-3 group">
               <div className="w-12 h-12 bg-primary rounded-2xl flex items-center justify-center group-hover:bg-black transition-all duration-500 shadow-[0_10px_30px_rgba(255,0,51,0.3)]">

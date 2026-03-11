@@ -43,10 +43,10 @@ export default function ResetPage() {
       <InteractiveGrid />
       
       {/* Background Aura */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[150px] z-0 animate-pulse" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] md:w-[800px] md:h-[800px] bg-primary/5 rounded-full blur-[150px] z-0 animate-pulse" />
 
       <FadeIn className="w-full max-w-xl relative z-10">
-        <div className="bg-white border-2 border-zinc-100 p-12 md:p-20 rounded-[80px] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.05)] relative overflow-hidden">
+        <div className="bg-white border-2 border-zinc-100 p-6 md:p-12 md:p-6 md:p-20 rounded-[80px] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.05)] relative overflow-hidden">
            <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] pointer-events-none" />
            
            <div className="mb-12 text-center">

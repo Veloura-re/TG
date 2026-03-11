@@ -19,7 +19,7 @@ export default function AdminGalleryPage() {
 
       {/* Upload Zone Placeholder */}
       <FadeIn>
-         <div className="bg-white border-2 border-dashed border-border p-16 rounded-[48px] flex flex-col items-center justify-center text-center group hover:border-black transition-colors cursor-pointer">
+         <div className="bg-white border-2 border-dashed border-border p-6 md:p-16 rounded-[48px] flex flex-col items-center justify-center text-center group hover:border-black transition-colors cursor-pointer">
             <div className="w-20 h-20 bg-zinc-50 rounded-3xl flex items-center justify-center border border-border mb-8 group-hover:bg-black group-hover:text-white transition-colors">
                <UploadCloud className="w-10 h-10" />
             </div>

@@ -154,30 +154,68 @@ CREATE POLICY "Super admins can manage admins" ON public.admins FOR ALL USING (
 );
 
 --------------------------------------------------------------------------------
--- STORAGE BUCKETS SETUP (Instructions for SQL Editor)
+-- 8. COMMENTS TABLE
 --------------------------------------------------------------------------------
-/*
--- Make sure to create these buckets in the Supabase Dashboard:
--- 1. news-images
--- 2. event-banners
--- 3. program-images
--- 4. gallery-images
--- 5. documents
 
--- Storage Policies (Run after creating buckets):
+CREATE TABLE IF NOT EXISTS public.comments (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    user_id UUID REFERENCES auth.users ON DELETE CASCADE NOT NULL,
+    parent_id UUID REFERENCES public.comments ON DELETE CASCADE, -- For nested comments
+    content TEXT NOT NULL,
+    target_type TEXT NOT NULL CHECK (target_type IN ('news', 'events', 'programs')),
+    target_id UUID NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
 
-CREATE POLICY "Public Read for news-images" ON storage.objects FOR SELECT USING (bucket_id = 'news-images');
-CREATE POLICY "Admin CRUD for news-images" ON storage.objects FOR ALL USING (bucket_id = 'news-images' AND public.is_admin());
+-- Enable RLS on comments
+ALTER TABLE public.comments ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Public Read for event-banners" ON storage.objects FOR SELECT USING (bucket_id = 'event-banners');
-CREATE POLICY "Admin CRUD for event-banners" ON storage.objects FOR ALL USING (bucket_id = 'event-banners' AND public.is_admin());
+-- Allow public read access for comments
+CREATE POLICY "Allow public read access for comments" ON public.comments FOR SELECT USING (true);
 
-CREATE POLICY "Public Read for program-images" ON storage.objects FOR SELECT USING (bucket_id = 'program-images');
-CREATE POLICY "Admin CRUD for program-images" ON storage.objects FOR ALL USING (bucket_id = 'program-images' AND public.is_admin());
+-- Allow authenticated users to insert comments
+CREATE POLICY "Authenticated users can insert comments" ON public.comments FOR INSERT WITH CHECK (auth.uid() IS NOT NULL);
 
-CREATE POLICY "Public Read for gallery-images" ON storage.objects FOR SELECT USING (bucket_id = 'gallery-images');
-CREATE POLICY "Admin CRUD for gallery-images" ON storage.objects FOR ALL USING (bucket_id = 'gallery-images' AND public.is_admin());
+-- Allow users to update their own comments
+CREATE POLICY "Users can update their own comments" ON public.comments FOR UPDATE USING (auth.uid() = user_id);
 
-CREATE POLICY "Public Read for documents" ON storage.objects FOR SELECT USING (bucket_id = 'documents');
-CREATE POLICY "Admin CRUD for documents" ON storage.objects FOR ALL USING (bucket_id = 'documents' AND public.is_admin());
-*/
+-- Allow users to delete their own comments
+CREATE POLICY "Users can delete their own comments" ON public.comments FOR DELETE USING (auth.uid() = user_id);
+
+-- Admins can manage any comment
+CREATE POLICY "Admins can manage any comment" ON public.comments FOR ALL USING (public.is_admin());
+
+--------------------------------------------------------------------------------
+-- 9. PROFILES TABLE
+--------------------------------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS public.profiles (
+    id UUID REFERENCES auth.users ON DELETE CASCADE PRIMARY KEY,
+    full_name TEXT,
+    avatar_url TEXT,
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Enable RLS on profiles
+ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
+
+-- Allow public read access for profiles
+CREATE POLICY "Allow public read access for profiles" ON public.profiles FOR SELECT USING (true);
+
+-- Allow users to update their own profile
+CREATE POLICY "Users can update their own profile" ON public.profiles FOR UPDATE USING (auth.uid() = id);
+
+-- Trigger for new user profile creation
+CREATE OR REPLACE FUNCTION public.handle_new_user()
+RETURNS trigger AS $$
+BEGIN
+  INSERT INTO public.profiles (id, full_name, avatar_url)
+  VALUES (new.id, new.raw_user_meta_data->>'full_name', new.raw_user_meta_data->>'avatar_url');
+  RETURN new;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+CREATE OR REPLACE TRIGGER on_auth_user_created
+  AFTER INSERT ON auth.users
+  FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
