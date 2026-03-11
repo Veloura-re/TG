@@ -1,49 +1,71 @@
 'use client'
 
+import React, { useState } from 'react'
 import { FadeIn, AnimatedSection, TextReveal, Magnetic } from '@/components/shared/animations'
-import { GraduationCap, Award, Globe, Zap, ArrowRight, Shield, Cpu } from 'lucide-react'
+import { GraduationCap, Award, Globe, Zap, ArrowRight, Shield, Cpu, ChevronDown, CheckCircle2 } from 'lucide-react'
+import { cn } from '@/lib/utils'
 
 const PROGRAMS = [
   { 
     id: 1, 
     name: 'Excellence Scholarships', 
-    description: 'Tier-1 funding for high-performance research in quantum computing and sustainable energy.', 
+    description: 'Special funding for academic research in technology and sustainable energy.', 
     image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=800',
-    eligibility: 'GPA 3.8+ / Research Proposal Alpha',
-    deadline: 'Sep 30, 2026'
+    eligibility: 'GPA 3.8+ / Research Proposal',
+    deadline: 'Sep 30, 2026',
+    curriculum: [
+      'Advanced Technology Algorithms',
+      'Artificial Intelligence Design',
+      'Professional Ethics',
+      'Global Research Network'
+    ]
   },
   { 
     id: 2, 
-    name: 'Leadership Training Protocol', 
-    description: 'Executive-level strategic management and cultural diplomacy training for global nodes.', 
+    name: 'Leadership Training', 
+    description: 'Strategic management and communication training for our global members.', 
     image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=800',
     eligibility: '3+ Years Professional Experience',
-    deadline: 'Oct 15, 2026'
+    deadline: 'Oct 15, 2026',
+    curriculum: [
+      'Strategic Negotiation',
+      'Global Communication',
+      'Community Leadership',
+      'Professional Etiquette'
+    ]
   },
   { 
     id: 3, 
-    name: 'Global Exchange Initiative', 
-    description: 'Secure cross-node placement in international high-tech organizations and research labs.', 
+    name: 'Global Exchange Program', 
+    description: 'Placement in international organizations and professional research labs.', 
     image: 'https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?auto=format&fit=crop&q=80&w=800',
     eligibility: 'Current Program Graduate Only',
-    deadline: 'Jan 10, 2027'
+    deadline: 'Jan 10, 2027',
+    curriculum: [
+      'Global Work Culture',
+      'Professional Standards',
+      'Alumni Networking',
+      'Career Placement'
+    ]
   },
 ]
 
 export default function ProgramsPage() {
+  const [expandedId, setExpandedId] = useState<number | null>(null)
+
   return (
     <div className="bg-white min-h-screen">
       <section className="section-padding pt-40">
         <div className="max-w-6xl mb-32">
           <FadeIn>
-            <span className="text-primary font-bold text-xs uppercase tracking-[0.4em] mb-8 block font-mono">Operations // Programs</span>
+            <span className="text-primary font-bold text-xs uppercase tracking-[0.4em] mb-8 block font-mono">Available Programs</span>
           </FadeIn>
           <h1 className="text-7xl md:text-[140px] font-bold tracking-tighter mb-8 leading-[0.85] text-black">
-            <TextReveal text="EXCELLENCE" className="mb-2" />
-            <span className="text-primary italic"><TextReveal text="PROTOCOLS." /></span>
+            <TextReveal text="CAREER" className="mb-2" />
+            <span className="text-primary italic"><TextReveal text="PATHWAYS." /></span>
           </h1>
           <p className="text-2xl text-muted leading-relaxed font-medium max-w-3xl">
-            Strategic educational pathways and professional acceleration for the global Turkish graduate elite.
+            Professional development and career support for our global community of graduates.
           </p>
         </div>
 
@@ -65,13 +87,32 @@ export default function ProgramsPage() {
                   </div>
                 </div>
 
-                <div className="p-12 pb-16 flex-1 flex flex-col space-y-10">
+                <div className="p-12 flex-1 flex flex-col space-y-10">
                   <div className="space-y-6">
                     <h3 className="text-4xl font-bold tracking-tighter leading-none group-hover:text-primary transition-colors">{prog.name}</h3>
                     <p className="text-muted leading-relaxed font-medium text-lg">{prog.description}</p>
                   </div>
 
-                  <div className="pt-10 border-t border-zinc-50 space-y-4 font-bold text-[10px] tracking-widest uppercase">
+                  {/* Curriculum Toggle */}
+                  <div className="space-y-4">
+                    <button 
+                      onClick={() => setExpandedId(expandedId === prog.id ? null : prog.id)}
+                      className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-widest text-black hover:text-primary transition-colors"
+                    >
+                      Program Details <ChevronDown className={cn("w-4 h-4 transition-transform", expandedId === prog.id ? "rotate-180" : "")} />
+                    </button>
+                    {expandedId === prog.id && (
+                      <div className="space-y-3 pt-2">
+                        {prog.curriculum.map((item, idx) => (
+                          <div key={idx} className="flex items-center gap-4 text-xs font-medium text-muted">
+                            <CheckCircle2 className="w-4 h-4 text-primary" /> {item}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="pt-10 border-t border-zinc-50 space-y-4 font-bold text-[10px] tracking-widest uppercase mt-auto">
                     <div className="flex justify-between items-center group-hover:text-black transition-colors">
                       <span className="text-muted flex items-center gap-2"><Shield className="w-3.5 h-3.5" /> Eligibility</span>
                       <span>{prog.eligibility}</span>

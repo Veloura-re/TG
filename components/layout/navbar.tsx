@@ -2,17 +2,18 @@
 
 import React from 'react'
 import Link from 'next/link'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import { Menu, X, Landmark, Search, Globe } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Magnetic } from '@/components/shared/animations'
 
-const navItems = [
-  { name: 'About', href: '/about' },
-  { name: 'News', href: '/news' },
-  { name: 'Events', href: '/events' },
-  { name: 'Programs', href: '/programs' },
-  { name: 'Opportunities', href: '/opportunities' },
+const navLinks = [
+  { href: '/about', label: 'About Us' },
+  { href: '/programs', label: 'Programs' },
+  { href: '/vision', label: 'Our Vision' },
+  { href: '/network', label: 'Connect' },
+  { href: '/news', label: 'Latest News' },
+  { href: '/events', label: 'Events' },
 ]
 
 export function Navbar() {
@@ -40,29 +41,29 @@ export function Navbar() {
         className="h-20 flex items-center justify-between px-8 md:px-12 pointer-events-auto transition-colors"
       >
         <Link href="/" className="flex items-center gap-3 group">
-          <div className="w-10 h-10 bg-black rounded-xl flex items-center justify-center group-hover:bg-primary transition-colors duration-500">
+          <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center group-hover:bg-black transition-all duration-700 shadow-[0_0_20px_rgba(255,0,51,0.3)]">
             <Landmark className="w-6 h-6 text-white" />
           </div>
-          <span className="font-bold text-xl tracking-tighter uppercase">TR Graduates</span>
+          <span className="font-bold text-xl tracking-tighter uppercase italic text-black group-hover:text-primary transition-colors">TR <span className="text-primary not-italic">Grads.</span></span>
         </Link>
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-10">
-          {navItems.map((item) => (
+          {navLinks.map((item) => (
             <Link
-              key={item.name}
+              key={item.label}
               href={item.href}
               className="text-xs font-bold uppercase tracking-widest text-muted hover:text-primary transition-colors relative group py-2"
             >
-              {item.name}
+              {item.label}
               <span className="absolute bottom-0 left-0 w-full h-[2px] bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
             </Link>
           ))}
           
           <Magnetic>
-            <button className="bg-black text-white px-8 py-3 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-primary transition-colors shadow-xl active:scale-95">
-              Portal
-            </button>
+            <Link href="/login" className="bg-primary text-white px-8 py-3 rounded-full text-xs font-bold uppercase tracking-[0.2em] hover:bg-black transition-all shadow-[0_10px_30px_rgba(255,0,51,0.3)] active:scale-95">
+              Alumni Portal
+            </Link>
           </Magnetic>
         </div>
 
@@ -81,24 +82,22 @@ export function Navbar() {
             exit={{ opacity: 0, clipPath: 'inset(0 0 100% 0)' }}
             className="fixed inset-0 bg-white z-40 p-8 flex flex-col justify-center gap-8 md:hidden"
           >
-            {navItems.map((item) => (
+            {navLinks.map((item) => (
               <Link
-                key={item.name}
+                key={item.label}
                 href={item.href}
                 onClick={() => setIsOpen(false)}
-                className="text-5xl font-bold tracking-tighter hover:text-primary transition-colors"
+                className="text-5xl font-bold tracking-tighter hover:text-primary transition-colors uppercase"
               >
-                {item.name}
+                {item.label}
               </Link>
             ))}
-            <button className="w-full bg-black text-white py-6 rounded-3xl text-2xl font-bold uppercase tracking-widest">
-              Admin Portal
-            </button>
+            <Link href="/login" onClick={() => setIsOpen(false)} className="w-full bg-black text-white py-6 rounded-3xl text-2xl font-bold uppercase tracking-widest text-center">
+              Alumni Portal
+            </Link>
           </motion.div>
         )}
       </AnimatePresence>
     </div>
   )
 }
-
-import { AnimatePresence } from 'framer-motion'

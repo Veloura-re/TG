@@ -1,6 +1,8 @@
 'use client'
 
+import Link from 'next/link'
 import { FadeIn, AnimatedSection, TextReveal, Magnetic } from '@/components/shared/animations'
+import { Timeline } from '@/components/about/timeline'
 import { Landmark, Target, Eye, Compass, ShieldCheck, Zap, ArrowRight, Shield } from 'lucide-react'
 
 export default function AboutPage() {
@@ -10,14 +12,14 @@ export default function AboutPage() {
       <section className="section-padding pt-40 pb-24 border-b border-zinc-100">
         <div className="max-w-6xl">
           <FadeIn>
-            <span className="text-primary font-bold text-xs uppercase tracking-[0.4em] mb-8 block">Protocol 01 // Origins</span>
+            <span className="text-primary font-bold text-xs uppercase tracking-[0.4em] mb-8 block">Our Story</span>
           </FadeIn>
           <h1 className="text-7xl md:text-[140px] font-bold tracking-tighter mb-12 leading-[0.85] text-black">
-            <TextReveal text="MISSION" className="mb-2" />
-            <span className="text-primary italic"><TextReveal text="INTELLIGENCE." /></span>
+            <TextReveal text="ABOUT" className="mb-2" />
+            <span className="text-primary italic uppercase"><TextReveal text="US." /></span>
           </h1>
           <p className="text-2xl md:text-3xl text-muted max-w-3xl leading-relaxed font-medium">
-            Deploying a lifelong legacy of excellence and mutual support for the global network of elite Turkish program graduates.
+            Building a lifelong legacy of excellence and support for our global network of Turkish program graduates.
           </p>
         </div>
       </section>
@@ -38,9 +40,9 @@ export default function AboutPage() {
             </p>
             <div className="pt-10">
               <Magnetic>
-                <button className="bg-black text-white px-10 py-5 rounded-full text-xs font-bold uppercase tracking-widest flex items-center gap-3 hover:bg-primary transition-all shadow-2xl">
-                  Explore Nodes <Zap className="w-4 h-4 fill-white" />
-                </button>
+                <Link href="/network" className="bg-black text-white px-10 py-5 rounded-full text-xs font-bold uppercase tracking-widest inline-flex items-center gap-3 hover:bg-primary transition-all shadow-2xl">
+                  Our Network <Zap className="w-4 h-4 fill-white" />
+                </Link>
               </Magnetic>
             </div>
           </div>
@@ -61,6 +63,22 @@ export default function AboutPage() {
         </div>
       </AnimatedSection>
 
+      {/* Milestones Protocol Section */}
+      <section className="section-padding py-40 border-t border-zinc-100 bg-zinc-50/30 overflow-hidden">
+        <div className="max-w-4xl mx-auto text-center mb-32">
+          <FadeIn>
+            <span className="text-primary font-bold text-xs uppercase tracking-[0.4em] mb-8 block">Our History</span>
+          </FadeIn>
+          <h2 className="text-5xl md:text-9xl font-bold tracking-tighter text-black italic-bold leading-none mb-12 uppercase">
+            OUR<br />JOURNEY.
+          </h2>
+          <p className="text-2xl text-muted font-medium leading-relaxed">
+            The evolution of our professional community, from its first meeting to a global organization.
+          </p>
+        </div>
+        <Timeline />
+      </section>
+
       {/* Core Objectives / Stats Grid */}
       <AnimatedSection className="bg-black py-40 px-6 rounded-[80px] mx-6 mb-24 overflow-hidden relative">
         <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 pointer-events-none" />
@@ -68,17 +86,17 @@ export default function AboutPage() {
           {[
             { 
               title: "Global Mission", 
-              desc: "Facilitating extreme networking and providing continuous intelligence for our alumni nodes.",
+              desc: "Connecting alumni and providing continuous updates for our global network.",
               icon: Target
             },
             { 
-              title: "Futuristic Vision", 
-              desc: "To be the premier global platform for professional excellence and high-tech collaboration.",
+              title: "Our Vision", 
+              desc: "To be the premier platform for professional excellence and collaboration.",
               icon: Eye
             },
             { 
-              title: "Secure Values", 
-              desc: "Integrity, Global Citizenship, and Mutual Respect encrypted into our network protocol.",
+              title: "Our Values", 
+              desc: "Integrity, Global Citizenship, and Mutual Respect are at the heart of everything we do.",
               icon: ShieldCheck
             },
           ].map((item, i) => (

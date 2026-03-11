@@ -3,11 +3,11 @@
 @theme {
   --color-background: #ffffff;
   --color-foreground: #0a0a0a;
-  --color-primary: #e11d48; /* Vibrant Red */
-  --color-secondary: #18181b; /* Zinc 900 */
-  --color-muted: #52525b; /* Zinc 600 */
-  --color-accent: #e11d48;
-  --color-border: #e4e4e7;
+  --color-primary: #ff0033; /* Extreme Cyber Red */
+  --color-secondary: #0a0a0a; /* Pure Black */
+  --color-muted: #71717a; /* Zinc 500 */
+  --color-accent: #ff0033;
+  --color-border: #f4f4f5;
   
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   --font-display: 'Inter Tight', 'Inter', system-ui, sans-serif;
@@ -23,9 +23,38 @@
   }
 }
 
+/* Extreme Red Design System */
+.text-extreme-red {
+  color: #ff0033;
+  text-shadow: 0 0 10px rgba(255, 0, 51, 0.2);
+}
+
+.bg-red-gradient {
+  background: linear-gradient(135deg, #ff0033 0%, #cc0029 100%);
+}
+
+.glow-red-extreme {
+  box-shadow: 0 0 40px -10px rgba(255, 0, 51, 0.4);
+}
+
+.glow-red-text {
+  text-shadow: 0 0 15px rgba(255, 0, 51, 0.5);
+}
+
+.border-red-glow {
+  border-color: #ff0033;
+  box-shadow: inset 0 0 10px rgba(255, 0, 51, 0.1), 0 0 20px rgba(255, 0, 51, 0.1);
+}
+
+.cyber-grid {
+  background-image: linear-gradient(to right, rgba(255, 0, 51, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 0, 51, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
 /* Futuristic Gradients & Glows */
 .gradient-text {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-black to-secondary;
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-black to-zinc-800;
 }
 
 .futuristic-border {
@@ -39,14 +68,6 @@
 
 .futuristic-border:hover::after {
   @apply scale-x-100;
-}
-
-.glow-red {
-  box-shadow: 0 0 20px -5px rgba(225, 29, 72, 0.3);
-}
-
-.glow-dark {
-  box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.1);
 }
 
 /* Claude-inspired futuristic motion */
@@ -85,4 +106,8 @@
   pointer-events: none;
   background-image: url("https://grainy-gradients.vercel.app/noise.svg");
   filter: contrast(120%) brightness(120%);
+}
+
+.italic-bold {
+  @apply font-bold italic tracking-tighter;
 }
