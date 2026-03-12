@@ -1,3 +1,4 @@
+'use client'
 import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { FadeIn, AnimatedSection, Magnetic } from '@/components/shared/animations'
