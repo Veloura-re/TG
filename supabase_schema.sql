@@ -147,10 +147,21 @@ CREATE POLICY "Admins can insert gallery" ON public.gallery FOR INSERT WITH CHEC
 CREATE POLICY "Admins can update gallery" ON public.gallery FOR UPDATE USING (public.is_admin());
 CREATE POLICY "Admins can delete gallery" ON public.gallery FOR DELETE USING (public.is_admin());
 
--- Admins table protection
-CREATE POLICY "Admins can view admins" ON public.admins FOR SELECT USING (public.is_admin());
-CREATE POLICY "Super admins can manage admins" ON public.admins FOR ALL USING (
-  EXISTS (SELECT 1 FROM public.admins WHERE id = auth.uid() AND role = 'super_admin')
+-- Admins table protection - Fixed to avoid recursion
+DROP POLICY IF EXISTS "Admins can view admins" ON public.admins;
+DROP POLICY IF EXISTS "Super admins can manage admins" ON public.admins;
+
+-- Allow all authenticated users to see who the admins are (required for is_admin() checks)
+CREATE POLICY "Anyone authenticated can view admins" ON public.admins FOR SELECT TO authenticated USING (true);
+
+-- Only super_admins can modify the admins table
+CREATE POLICY "Super admins can manage admins" ON public.admins 
+FOR ALL TO authenticated 
+USING (
+  (SELECT role FROM public.admins WHERE id = auth.uid()) = 'super_admin'
+)
+WITH CHECK (
+  (SELECT role FROM public.admins WHERE id = auth.uid()) = 'super_admin'
 );
 
 --------------------------------------------------------------------------------

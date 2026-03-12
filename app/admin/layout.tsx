@@ -16,9 +16,10 @@ import {
   Zap,
   Shield
 } from 'lucide-react'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import { FadeIn, Magnetic } from '@/components/shared/animations'
+import { createClient } from '@/utils/supabase-browser'
 
 const sidebarItems = [
   { name: 'Overview', href: '/admin', icon: BarChart3 },
@@ -32,6 +33,55 @@ const sidebarItems = [
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
+  const router = useRouter()
+  const [isAdmin, setIsAdmin] = React.useState<boolean | null>(null)
+  const supabase = createClient()
+
+  React.useEffect(() => {
+    async function checkAdmin() {
+      try {
+        const { data: { user } } = await supabase.auth.getUser()
+        if (!user) {
+          router.push('/login')
+          return
+        }
+
+        const { data: admin, error } = await supabase
+          .from('admins')
+          .select('role')
+          .eq('id', user.id)
+          .single()
+
+        if (error || !admin) {
+          console.error('Admin check failed:', error)
+          setIsAdmin(false)
+          router.push('/dashboard')
+        } else {
+          setIsAdmin(true)
+        }
+      } catch (err) {
+        console.error('Error in checkAdmin:', err)
+        setIsAdmin(false)
+        router.push('/dashboard')
+      }
+    }
+    checkAdmin()
+  }, [router, supabase])
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut()
+    router.push('/login')
+  }
+
+  if (isAdmin === null) {
+    return (
+      <div className="flex h-screen items-center justify-center bg-zinc-50">
+        <div className="w-8 h-8 border-4 border-primary/30 border-t-primary rounded-full animate-spin" />
+      </div>
+    )
+  }
+
+  if (isAdmin === false) return null
 
   return (
     <div className="flex min-h-screen bg-zinc-50 font-sans">
@@ -80,7 +130,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 <p className="text-xs text-muted font-medium">Secured Node</p>
              </div>
           </div>
-          <button className="w-full flex items-center gap-4 px-6 py-4 rounded-2xl text-xs font-bold uppercase tracking-widest text-red-600 hover:bg-red-50 transition-all">
+          <button 
+            onClick={handleLogout}
+            className="w-full flex items-center gap-4 px-6 py-4 rounded-2xl text-xs font-bold uppercase tracking-widest text-red-600 hover:bg-red-50 transition-all"
+          >
             <LogOut className="w-5 h-5" />
             De-authenticate
           </button>

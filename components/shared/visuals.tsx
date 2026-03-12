@@ -130,3 +130,54 @@ export function GlobalMap() {
 }
 
 import { cn } from '@/lib/utils'
+import { usePathname } from 'next/navigation'
+
+export function TurkishDecorativeElements() {
+  const pathname = usePathname()
+  const isAdminRoute = pathname?.startsWith('/admin')
+
+  if (isAdminRoute) return null
+
+  return (
+    <div className="fixed inset-0 pointer-events-none z-[1] overflow-hidden">
+      {/* Top Right Crescent - Enhanced */}
+      <motion.div 
+        initial={{ opacity: 0, rotate: -20, x: 20 }}
+        whileInView={{ opacity: 0.15, rotate: 0, x: 0 }}
+        transition={{ duration: 2, ease: "easeOut" }}
+        className="absolute -top-10 -right-10 w-[500px] h-[500px] text-primary/40"
+      >
+        <svg viewBox="0 0 100 100" fill="currentColor" className="drop-shadow-[0_0_50px_rgba(255,0,51,0.2)]">
+          <path d="M50 10 C27.9 10 10 27.9 10 50 C10 72.1 27.9 90 50 90 C34.8 90 22.5 77.7 22.5 62.5 C22.5 47.3 34.8 35 50 35 C55.5 35 60.6 36.6 64.9 39.4 C60.6 22.2 45 10 50 10 Z" />
+        </svg>
+      </motion.div>
+
+      {/* Bottom Left Star - Enhanced */}
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.5, x: -20 }}
+        whileInView={{ opacity: 0.12, scale: 1, x: 0 }}
+        transition={{ duration: 3, delay: 0.5, ease: "easeOut" }}
+        className="absolute -bottom-20 -left-20 w-[600px] h-[600px] text-primary/30"
+      >
+        <svg viewBox="0 0 100 100" fill="currentColor" className="drop-shadow-[0_0_50px_rgba(255,0,51,0.2)]">
+          <path d="M50 5 L61 35 L95 35 L68 55 L78 85 L50 65 L22 85 L32 55 L5 35 L39 35 Z" />
+        </svg>
+      </motion.div>
+
+      {/* Flag Ribbon / Corner Accent */}
+      <div className="absolute top-0 left-0 w-32 h-32 overflow-hidden z-[60]">
+        <div className="absolute top-0 left-0 w-[150%] h-[20px] bg-primary rotate-[-45deg] -translate-x-1/2 translate-y-4 shadow-lg flex items-center justify-center">
+            <div className="flex items-center gap-1 scale-75">
+                <div className="w-1 h-1 bg-white rounded-full animate-pulse" />
+                <span className="text-[6px] text-white font-bold uppercase tracking-[0.3em]">Official</span>
+                <div className="w-1 h-1 bg-white rounded-full animate-pulse" />
+            </div>
+        </div>
+      </div>
+
+      {/* Subtle floating red glows - slightly more intense */}
+      <div className="absolute top-1/3 -right-20 w-96 h-96 bg-primary/15 rounded-full blur-[150px] animate-pulse" />
+      <div className="absolute bottom-1/3 -left-20 w-[500px] h-[500px] bg-primary/15 rounded-full blur-[180px] animate-pulse " style={{ animationDelay: '3s' }} />
+    </div>
+  )
+}

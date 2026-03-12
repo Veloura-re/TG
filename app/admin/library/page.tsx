@@ -67,15 +67,15 @@ export default function AdminResourcesPage() {
 
   return (
     <AdminDataTable
-      title="Resource Center."
-      description="Upload and manage official documents and guides."
+      title="Library Archive."
+      description="Catalogue and manage the collective intelligence: Books, papers, and manuscripts."
       columns={columns}
       data={data}
       isLoading={isLoading}
       onRefresh={fetchResources}
       onDelete={handleDelete}
-      createHref="/admin/resources/new"
-      createText="Upload Document"
+      createHref="/admin/library/new"
+      createText="Archive New Book"
       searchKey="title"
     />
   )

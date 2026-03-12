@@ -2,9 +2,15 @@
 
 import Link from 'next/link'
 import { Landmark, Youtube, Twitter, Instagram, Linkedin, Mail, Zap, Shield, ArrowUpRight } from 'lucide-react'
+import { usePathname } from 'next/navigation'
 import { Magnetic } from '@/components/shared/animations'
 
 export function Footer() {
+  const pathname = usePathname()
+  const isAdminRoute = pathname?.startsWith('/admin')
+
+  if (isAdminRoute) return null
+
   return (
     <footer className="bg-white pt-32 pb-16 relative overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-[1px] bg-zinc-100" />

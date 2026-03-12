@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Figtree } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
+import { cn } from "@/lib/utils";
+import { TurkishDecorativeElements } from "@/components/shared/visuals";
+
+const figtree = Figtree({subsets:['latin'],variable:'--font-sans'});
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,8 +21,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={cn("font-sans", figtree.variable)}>
       <body className={inter.className}>
+        <TurkishDecorativeElements />
         <Navbar />
         <main className="min-h-screen pt-20">
           {children}

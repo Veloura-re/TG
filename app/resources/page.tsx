@@ -1,8 +1,10 @@
 'use client'
 
 import { FadeIn, AnimatedSection, TextReveal, Magnetic } from '@/components/shared/animations'
-import { Files, Download, ArrowRight, Shield, Zap, Search, Globe, FileText } from 'lucide-react'
+import { Files, Download, ArrowRight, Shield, Zap, Search, Globe, FileText, Plus } from 'lucide-react'
 import Link from 'next/link'
+import { useState, useEffect } from 'react'
+import { createClient } from '@/utils/supabase-browser'
 
 const RESOURCES = [
   { id: 1, title: 'Network Protocol Handbook 2026', type: 'PDF', size: '2.4 MB', node: 'Node 01' },
@@ -13,6 +15,25 @@ const RESOURCES = [
 ]
 
 export default function ResourcesPage() {
+  const [isAdmin, setIsAdmin] = useState(false)
+  const supabase = createClient()
+
+  useEffect(() => {
+    checkAdmin()
+  }, [])
+
+  async function checkAdmin() {
+    const { data: { user } } = await supabase.auth.getUser()
+    if (user) {
+      const { data: admin } = await supabase
+        .from('admins')
+        .select('role')
+        .eq('id', user.id)
+        .single()
+      setIsAdmin(!!admin)
+    }
+  }
+
   return (
     <div className="bg-white min-h-screen">
       <section className="section-padding pt-40">
@@ -27,6 +48,19 @@ export default function ResourcesPage() {
           <p className="text-2xl text-muted leading-relaxed font-medium max-w-3xl">
             Encryption-standard access to official documents, research papers, and strategic network guides.
           </p>
+          
+          {isAdmin && (
+            <div className="mt-12">
+              <Magnetic>
+                <Link href="/admin/resources/new" className="group bg-black text-white px-10 py-6 rounded-3xl font-bold uppercase text-[10px] tracking-[0.3em] flex items-center gap-4 hover:bg-primary transition-all shadow-2xl active:scale-95 border border-white/10 w-fit">
+                  <div className="w-8 h-8 bg-white/10 rounded-xl flex items-center justify-center group-hover:bg-white group-hover:text-primary transition-all">
+                    <Plus className="w-5 h-5" />
+                  </div>
+                  Deploy Asset
+                </Link>
+              </Magnetic>
+            </div>
+          )}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

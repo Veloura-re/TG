@@ -3,9 +3,11 @@
 import React from 'react'
 import Link from 'next/link'
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
-import { Menu, X, Landmark, Search, Globe } from 'lucide-react'
+import { Menu, X, Landmark, Search, Globe, Shield } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Magnetic } from '@/components/shared/animations'
+import { createClient } from '@/utils/supabase-browser'
+import { useRouter, usePathname } from 'next/navigation'
 
 const navLinks = [
   { href: '/about', label: 'About Us' },
@@ -18,13 +20,56 @@ const navLinks = [
 
 export function Navbar() {
   const [isOpen, setIsOpen] = React.useState(false)
+  const [user, setUser] = React.useState<any>(null)
+  const [isAdmin, setIsAdmin] = React.useState(false)
   const { scrollY } = useScroll()
-  
+  const supabase = createClient()
+  const router = useRouter()
+  const pathname = usePathname()
+  const isAdminRoute = pathname?.startsWith('/admin')
+
+  React.useEffect(() => {
+    supabase.auth.getUser().then(async ({ data: { user } }) => {
+      setUser(user)
+      if (user) {
+        const { data: admin } = await supabase
+          .from('admins')
+          .select('role')
+          .eq('id', user.id)
+          .single()
+        setIsAdmin(!!admin)
+      }
+    })
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
+      setUser(session?.user ?? null)
+      if (session?.user) {
+        const { data: admin } = await supabase
+          .from('admins')
+          .select('role')
+          .eq('id', session.user.id)
+          .single()
+        setIsAdmin(!!admin)
+      } else {
+        setIsAdmin(false)
+      }
+    })
+
+    return () => subscription.unsubscribe()
+  }, [supabase.auth])
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut()
+    router.push('/')
+  }
+
   const width = useTransform(scrollY, [0, 100], ['100%', '90%'])
   const top = useTransform(scrollY, [0, 100], ['0px', '24px'])
   const borderRadius = useTransform(scrollY, [0, 100], ['0px', '24px'])
   const border = useTransform(scrollY, [0, 100], ['none', '1px solid rgba(228, 228, 231, 1)'])
   const boxShadow = useTransform(scrollY, [0, 100], ['none', '0 20px 40px -20px rgba(0, 0, 0, 0.1)'])
+
+  if (isAdminRoute) return null
 
   return (
     <div className="fixed top-0 left-0 right-0 z-50 flex justify-center pointer-events-none">
@@ -38,8 +83,11 @@ export function Navbar() {
           backdropFilter: 'blur(12px)',
           backgroundColor: 'rgba(255, 255, 255, 0.8)'
         }}
-        className="h-20 flex items-center justify-between px-8 md:px-12 pointer-events-auto transition-colors"
+        className="h-20 flex items-center justify-between px-8 md:px-12 pointer-events-auto transition-colors relative"
       >
+        {/* Top Accent Line (Flag Colors) */}
+        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent opacity-50" />
+
         <Link href="/" className="flex items-center gap-3 group">
           <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center group-hover:bg-black transition-all duration-700 shadow-[0_0_20px_rgba(255,0,51,0.3)]">
             <Landmark className="w-6 h-6 text-white" />
@@ -49,27 +97,52 @@ export function Navbar() {
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-10">
-          {navLinks.map((item) => (
-            <Link
-              key={item.label}
-              href={item.href}
-              className="text-xs font-bold uppercase tracking-widest text-muted hover:text-primary transition-colors relative group py-2"
-            >
-              {item.label}
-              <span className="absolute bottom-0 left-0 w-full h-[2px] bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
-            </Link>
-          ))}
+          <div className="flex items-center gap-8 border-r border-zinc-200 pr-8 mr-2">
+            {navLinks.map((item) => (
+              <Link
+                key={item.label}
+                href={item.href}
+                className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted hover:text-black transition-colors relative group py-2"
+              >
+                {item.label}
+                <span className="absolute bottom-0 left-0 w-full h-[1px] bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
+              </Link>
+            ))}
+          </div>
           
-          <Magnetic>
-            <Link href="/signup" className="border-2 border-zinc-200 text-black px-6 py-3 rounded-full text-xs font-bold uppercase tracking-[0.2em] hover:border-primary hover:text-primary transition-all active:scale-95">
-              Sign Up
-            </Link>
-          </Magnetic>
-          <Magnetic>
-            <Link href="/login" className="bg-primary text-white px-8 py-3 rounded-full text-xs font-bold uppercase tracking-[0.2em] hover:bg-black transition-all shadow-[0_10px_30px_rgba(255,0,51,0.3)] active:scale-95">
-              Login
-            </Link>
-          </Magnetic>
+          <div className="flex items-center gap-3">
+            {user ? (
+              <>
+                {isAdmin && (
+                  <Link href="/admin" className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary hover:text-black transition-all px-4 flex items-center gap-2">
+                    <Shield className="w-3 h-3" /> Control Center
+                  </Link>
+                )}
+                <Link href="/dashboard" className="text-[10px] font-bold uppercase tracking-[0.2em] hover:text-primary transition-all px-4">
+                  Account
+                </Link>
+                <Magnetic>
+                  <button 
+                    onClick={handleLogout}
+                    className="bg-black text-white px-8 py-3 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-primary transition-all shadow-xl active:scale-95"
+                  >
+                    Logout
+                  </button>
+                </Magnetic>
+              </>
+            ) : (
+              <>
+                <Link href="/signup" className="text-[10px] font-bold uppercase tracking-[0.2em] hover:text-primary transition-all px-4">
+                  Sign Up
+                </Link>
+                <Magnetic>
+                  <Link href="/login" className="bg-primary text-white px-8 py-3 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-black transition-all shadow-[0_10px_30px_rgba(255,0,51,0.3)] active:scale-95">
+                    Login
+                  </Link>
+                </Magnetic>
+              </>
+            )}
+          </div>
         </div>
 
         {/* Mobile Toggle */}
